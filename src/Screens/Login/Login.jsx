@@ -1,9 +1,10 @@
 import React from "react";
+import { Alert } from "react-native";
 import { Pagina, Container, Title, LoginLink, Link, LinkBotao } from "./Styles";
-import Toast from "react-native-toast-message";
 import FormSubmit from "../../Components/FormSubmit/FormSubmit.jsx";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLoginUsuario } from "../../Hooks/usuario.js"; // ajuste o caminho se necessário
 
 const schema = z.object({
   email: z.string().min(1, "Email obrigatório").email("Email inválido"),
@@ -11,19 +12,22 @@ const schema = z.object({
 });
 
 export default function Login({ navigation }) {
+  const { mutate: loginUsuario, isPending } = useLoginUsuario({
+    onSuccess: () => {
+      Alert.alert("Sucesso", "Login efetuado com sucesso!");
+    },
+    onError: (error) => {
+      Alert.alert(
+        "Erro ao fazer login",
+        error?.response?.data?.message || "Verifique suas credenciais"
+      );
+    },
+  });
+
   const inputs = [
     { key: "email", label: "Email", placeholder: "Digite seu email", type: "text" },
     { key: "senha", label: "Senha", placeholder: "Digite sua senha", type: "password" },
   ];
-
-  const handleLogin = (data) => {
-    Toast.show({
-      type: "success",
-      text1: "Login efetuado com sucesso!",
-    });
-
-    console.log("Login data:", data);
-  };
 
   return (
     <Pagina>
@@ -31,9 +35,9 @@ export default function Login({ navigation }) {
         <Title>Login</Title>
         <FormSubmit
           inputs={inputs}
-          onSubmit={handleLogin}
+          onSubmit={loginUsuario}
           schema={zodResolver(schema)}
-          loading={false}
+          loading={isPending}
           buttonText="Entrar"
         />
         <LoginLink>
