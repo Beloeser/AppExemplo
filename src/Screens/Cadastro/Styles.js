@@ -1,6 +1,6 @@
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
-export const Pagina = styled.View` 
+export const Pagina = styled.View`
   flex: 1;
   background-color: #000;
   justify-content: center;
@@ -12,25 +12,11 @@ export const Container = styled.View`
   align-items: center;
 `;
 
-export const StyledForm = styled.View`
-  width: 100%;
-  align-items: center;
-`;
-
-export const Title = styled.Text` 
+export const Title = styled.Text`
   font-size: 50px;
   font-weight: bold;
   color: #ffdb00;
   margin-bottom: 30px;
-`;
-
-export const Input = styled.TextInput` 
-  background-color: #fff;
-  width: 100%;
-  height: 50px;
-  margin-bottom: 15px;
-  padding: 0 15px;
-  font-size: 16px;
 `;
 
 export const LoginLink = styled.Text`
@@ -46,9 +32,17 @@ export const Link = styled.Text`
 
 export const LinkBotao = styled.TouchableOpacity``;
 
-export const Botao = styled.TouchableOpacity`
+export const Button = styled.TouchableOpacity`
   background-color: #ffdb00;
   padding: 15px 25px;
   border-radius: 10px;
   margin-top: 20px;
+  width: 100%;
+  align-items: center;
+`;
+
+export const ButtonText = styled.Text`
+  color: #000;
+  font-weight: bold;
+  font-size: 16px;
 `;
