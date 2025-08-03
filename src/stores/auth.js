@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { jwtDecode } from "jwt-decode"; // ✅ Correto agora
+import { jwtDecode } from "jwt-decode"; 
 
 const useAuthStore = create(
   persist(
@@ -10,10 +10,8 @@ const useAuthStore = create(
       usuario: null,
 
       setToken: (token) => {
-        console.log("🔑 setToken foi chamado com:", token);
         try {
-          const decoded = jwtDecode(token); // ✅ jwtDecode direto
-          console.log("👤 Usuário decodificado:", decoded.usuario);
+          const decoded = jwtDecode(token); 
           set({ token, usuario: decoded.usuario });
         } catch (error) {
           console.error("❌ Erro ao decodificar o token:", error);

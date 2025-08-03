@@ -4,7 +4,8 @@ import { Pagina, Container, Title, LoginLink, Link, LinkBotao } from "./Styles";
 import FormSubmit from "../../Components/FormSubmit/FormSubmit.jsx";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLoginUsuario } from "../../Hooks/usuario.js"; // ajuste o caminho se necessário
+import { useLoginUsuario } from "../../Hooks/usuario.js";
+import { useNotifications } from "../../Hooks/permissoes.js"; 
 
 const schema = z.object({
   email: z.string().min(1, "Email obrigatório").email("Email inválido"),
@@ -12,24 +13,26 @@ const schema = z.object({
 });
 
 export default function Login({ navigation }) {
+  const { sendLoginNotification } = useNotifications(); 
+
   const { mutate: loginUsuario, isPending } = useLoginUsuario({
     onSuccess: () => {
-  console.log("🎉 Login com sucesso! Redirecionando...");
-  Alert.alert("Sucesso", "Login efetuado com sucesso!", [
-    {
-      text: "OK",
-      onPress: () => navigation.replace("Logout"),
-    },
-  ]);
-},
-onError: (error) => {
-  console.error("❌ Erro ao fazer login:", error);
-  Alert.alert(
-    "Erro ao fazer login",
-    error?.response?.data?.message || "Verifique suas credenciais"
-  );
-},
+      sendLoginNotification(); 
 
+      Alert.alert("Sucesso", "Login efetuado com sucesso!", [
+        {
+          text: "OK",
+          onPress: () => navigation.replace("Logout"),
+        },
+      ]);
+    },
+    onError: (error) => {
+      console.error("❌ Erro ao fazer login:", error);
+      Alert.alert(
+        "Erro ao fazer login",
+        error?.response?.data?.message || "Verifique suas credenciais"
+      );
+    },
   });
 
   const inputs = [

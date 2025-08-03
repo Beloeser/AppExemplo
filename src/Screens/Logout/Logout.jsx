@@ -1,46 +1,31 @@
 import React, { useEffect } from "react";
 import { Alert } from "react-native";
 import { Container, LogoutButton, LogoutText } from "./Styles.js";
-import { useDeleteSessao } from "../../Hooks/usuario.js"; // ajuste o caminho se necessário
-import useAuthStore from "../../stores/auth.js"; // ajuste o caminho do seu store
+import useAuthStore from "../../stores/auth.js";
+import { useNotifications } from "../../Hooks/permissoes.js";  
 
 export default function Logout({ navigation }) {
   const { token, clearAuth } = useAuthStore();
+  const { sendLogoutNotification } = useNotifications(); 
 
   useEffect(() => {
-  console.log("🧾 useEffect - Token atual:", token);
-  if (!token) {
-    console.log("⛔ Sem token, redirecionando para Login");
-    navigation.replace("Login");
-  }
-}, [token, navigation]);
+    if (!token) {
+      navigation.replace("Login");
+    }
+  }, [token, navigation]);
 
-
-  const { mutate: logout, isLoading } = useDeleteSessao({
-    onSuccess: () => {
-      clearAuth(); // limpa o token e usuário do estado global
-      Alert.alert("Logout", "Logout efetuado com sucesso", [
-        { text: "OK", onPress: () => navigation.replace("Login") },
-      ]);
-    },
-    onError: () => {
-      Alert.alert("Erro", "Erro ao realizar logout");
-    },
-  });
-
-  const handleLogout = () => {
-    logout(); // dispara o hook de logout (delete sessão)
+  const handleLogout = async () => {
+    clearAuth(); 
+    await sendLogoutNotification(); 
+    Alert.alert("Logout", "Logout efetuado com sucesso");
   };
 
-  if (!token) {
-    // enquanto o redirecionamento não ocorre, não renderiza nada
-    return null;
-  }
+  if (!token) return null;
 
   return (
     <Container>
-      <LogoutButton onPress={handleLogout} disabled={isLoading}>
-        <LogoutText>{isLoading ? "Saindo..." : "Logout"}</LogoutText>
+      <LogoutButton onPress={handleLogout}>
+        <LogoutText>Logout</LogoutText>
       </LogoutButton>
     </Container>
   );

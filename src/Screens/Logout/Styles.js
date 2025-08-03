@@ -1,4 +1,3 @@
-// src/Screens/Styles.js
 import styled from "styled-components/native";
 
 export const Container = styled.View`
