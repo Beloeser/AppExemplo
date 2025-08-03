@@ -6,8 +6,8 @@ import {
   LoginLink,
   Link,
   LinkBotao,
-} from "./Styles";
-import { useCreateUsuario } from "../../Hooks/usuario";
+} from "./Styles.js";
+import { useCreateUsuario } from "../../Hooks/usuario.js";
 import Toast from "react-native-toast-message";
 import FormSubmit from "../../Components/FormSubmit/FormSubmit.jsx";
 import { z } from "zod";
