@@ -9,6 +9,7 @@ import {
   CreateSessao,
   DeleteSessao,
 } from "../Services/endpoints.js";
+import useAuthStore from "../stores/auth.js"
 
 
 // USUÁRIOS
@@ -45,12 +46,28 @@ export function useDeleteUsuario({ onSuccess = () => {}, onError = () => {} } = 
 
 // LOGIN
 export function useLoginUsuario({ onSuccess = () => {}, onError = () => {} } = {}) {
+  const setToken = useAuthStore((state) => state.setToken);
+
   return useMutation({
-    mutationFn: LoginUsuario,
+    mutationFn: async (dados) => {
+      console.log("📡 Fazendo login com:", dados);
+      const response = await LoginUsuario(dados);
+      console.log("📥 Resposta da API de login:", response);
+
+      if (response.token) {
+        console.log("🧠 Token recebido, chamando setToken...");
+        setToken(response.token);
+      } else {
+        console.warn("⚠️ Nenhum token encontrado na resposta!");
+      }
+
+      return response;
+    },
     onSuccess,
     onError,
   });
 }
+
 
 // SESSÕES
 export function useGetSessoes() {

@@ -1,1 +1,1 @@
-//logout
+export { default } from './Logout';

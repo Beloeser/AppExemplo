@@ -14,14 +14,22 @@ const schema = z.object({
 export default function Login({ navigation }) {
   const { mutate: loginUsuario, isPending } = useLoginUsuario({
     onSuccess: () => {
-      Alert.alert("Sucesso", "Login efetuado com sucesso!");
+  console.log("🎉 Login com sucesso! Redirecionando...");
+  Alert.alert("Sucesso", "Login efetuado com sucesso!", [
+    {
+      text: "OK",
+      onPress: () => navigation.replace("Logout"),
     },
-    onError: (error) => {
-      Alert.alert(
-        "Erro ao fazer login",
-        error?.response?.data?.message || "Verifique suas credenciais"
-      );
-    },
+  ]);
+},
+onError: (error) => {
+  console.error("❌ Erro ao fazer login:", error);
+  Alert.alert(
+    "Erro ao fazer login",
+    error?.response?.data?.message || "Verifique suas credenciais"
+  );
+},
+
   });
 
   const inputs = [
