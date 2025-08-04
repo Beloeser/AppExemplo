@@ -76,7 +76,7 @@ export default function Logout({ navigation }) {
         renderItem={({ item }) => <TabelaSessao item={item} onDelete={onDelete} />}
         ListHeaderComponent={
           <>
-            <View style={{ marginTop: 20 }}>
+            <View style={{ marginTop: 50 }}>
               <Carrossel />
             </View>
             <Titulo>Sessões</Titulo>
