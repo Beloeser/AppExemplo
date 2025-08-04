@@ -1,11 +1,12 @@
 import React from "react";
 import { Alert } from "react-native";
-import { Pagina, Container, Title, LoginLink, Link, LinkBotao } from "./Styles";
+import { Pagina, Container, Title, LoginLinkContainer, LoginLinkText, LoginLinkHighlight } from "./Styles";
 import FormSubmit from "../../Components/FormSubmit/FormSubmit.jsx";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLoginUsuario } from "../../Hooks/usuario.js";
 import { useNotifications } from "../../Hooks/permissoes.js"; 
+import Carrossel from "../../Components/Carrossel/Carrossel";
 
 const schema = z.object({
   email: z.string().min(1, "Email obrigatório").email("Email inválido"),
@@ -44,6 +45,8 @@ export default function Login({ navigation }) {
     <Pagina>
       <Container>
         <Title>Login</Title>
+        
+
         <FormSubmit
           inputs={inputs}
           onSubmit={loginUsuario}
@@ -51,12 +54,11 @@ export default function Login({ navigation }) {
           loading={isPending}
           buttonText="Entrar"
         />
-        <LoginLink>
-          Não tem conta?{" "}
-          <LinkBotao onPress={() => navigation?.navigate("Cadastro")}>
-            <Link>Cadastre-se</Link>
-          </LinkBotao>
-        </LoginLink>
+
+        <LoginLinkContainer onPress={() => navigation.navigate("Cadastro")}>
+          <LoginLinkText>Não tem conta? </LoginLinkText>
+          <LoginLinkHighlight>Cadastre-se</LoginLinkHighlight>
+        </LoginLinkContainer>
       </Container>
     </Pagina>
   );

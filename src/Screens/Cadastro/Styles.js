@@ -19,18 +19,22 @@ export const Title = styled.Text`
   margin-bottom: 30px;
 `;
 
-export const LoginLink = styled.Text`
+export const LoginLinkContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  margin-top: 15px;
+  justify-content: center;
+`;
+
+export const LoginLinkText = styled.Text`
   color: #fff;
   font-size: 14px;
-  margin-top: 15px;
 `;
 
-export const Link = styled.Text`
+export const LoginLinkHighlight = styled.Text`
   color: #ffdb00;
   font-weight: bold;
+  font-size: 14px;
 `;
-
-export const LinkBotao = styled.TouchableOpacity``;
 
 export const Button = styled.TouchableOpacity`
   background-color: #ffdb00;

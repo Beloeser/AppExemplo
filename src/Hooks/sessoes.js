@@ -23,11 +23,13 @@ export function useCreateSessao({ onSuccess = () => {}, onError = () => {} } = {
 
 export function useDeleteSessao({ onSuccess = () => {}, onError = () => {} } = {}) {
   return useMutation({
-    mutationFn: async () => {
-      const res = await DeleteSessao();
+    mutationFn: async (id) => {
+      const res = await DeleteSessao(id);
       return res;
     },
     onSuccess,
     onError,
   });
 }
+
+

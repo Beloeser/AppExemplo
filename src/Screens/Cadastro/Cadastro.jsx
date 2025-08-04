@@ -3,9 +3,9 @@ import {
   Pagina,
   Container,
   Title,
-  LoginLink,
-  Link,
-  LinkBotao,
+  LoginLinkContainer,
+  LoginLinkText,
+  LoginLinkHighlight,
 } from "./Styles.js";
 import { useCreateUsuario } from "../../Hooks/usuario.js";
 import Toast from "react-native-toast-message";
@@ -81,12 +81,11 @@ export default function Cadastro({ navigation }) {
           loading={createUsuario.isLoading}
           buttonText="Cadastrar"
         />
-        <LoginLink>
-          Já tem conta?{" "}
-          <LinkBotao onPress={() => navigation?.navigate("Login")}>
-            <Link>Faça login</Link>
-          </LinkBotao>
-        </LoginLink>
+
+        <LoginLinkContainer onPress={() => navigation.navigate("Login")}>
+          <LoginLinkText>Já tem conta? </LoginLinkText>
+          <LoginLinkHighlight>Faça login</LoginLinkHighlight>
+        </LoginLinkContainer>
       </Container>
     </Pagina>
   );
